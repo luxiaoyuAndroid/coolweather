@@ -1,4 +1,4 @@
-package model;
+package com.coolweather.app.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +7,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import db.CoolWeatherOpenHelper;
+
+import com.coolweather.app.model.City;
+import com.coolweather.app.model.County;
+import com.coolweather.app.model.Province;
 
 public class CoolWeatherDB 
 {   
 	/**
 	 * 数据库名
 	 */
-	private static final String DB_NAME = "cool_weather";
+	private static final String DB_NAME = "cool_weather.db";
 	/**
 	 * 数据库版本
 	 */
@@ -27,8 +30,8 @@ public class CoolWeatherDB
 	 */
 	private CoolWeatherDB(Context context)
 	{
-		CoolWeatherOpenHelper dpHelper = new CoolWeatherOpenHelper(context,DB_NAME,null,VERSION);
-		db = dpHelper.getWritableDatabase();
+		CoolWeatherOpenHelper dbHelper = new CoolWeatherOpenHelper(context,DB_NAME,null,VERSION);
+		db = dbHelper.getWritableDatabase();
 	}
 	/**
 	 *获取CoolWeatherDB的实例
@@ -134,13 +137,13 @@ public class CoolWeatherDB
 			values.put("county_name", county.getCountyName());
 			values.put("county_code", county.getCountyCode());
 			values.put("city_id", county.getCityId());
-			db.insert("City", null, values);
+			db.insert("County", null, values);
 		}
 	}
 	public List<County> loadCounties(int cityId)
 	{
 		List<County> list = new ArrayList<County>();
-		Cursor cursor = db.query("County", null, "city_id =?", new String[] {String.valueOf(cityId)}, null, null, null);
+		Cursor cursor = db.query("County", null, "city_id = ?", new String[] { String.valueOf(cityId)}, null, null, null);
 		if(cursor.moveToFirst())
 		{
 		do

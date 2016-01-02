@@ -1,4 +1,4 @@
-package model;
+package com.coolweather.app.model;
 
 public class City 
 {
@@ -30,10 +30,6 @@ public class City
 	public void setProvinceId(int provinceId) {
 		this.provinceId = provinceId;
 	}
-	public City() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
+
 	
 }
